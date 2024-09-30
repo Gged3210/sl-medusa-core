@@ -53,6 +53,14 @@ const plugins = [
     },
   },
   `medusa-plugin-wishlist`,
+  {
+    resolve: `medusa-file-s3`,
+    options: {
+      s3_url: process.env.S3_URL,
+      bucket: process.env.S3_BUCKET,
+      region: process.env.S3_REGION
+    },
+  },
 ];
 
 const modules = {
@@ -77,6 +85,14 @@ const projectConfig = {
   store_cors: STORE_CORS,
   database_url: DATABASE_URL,
   admin_cors: ADMIN_CORS,
+  database_extra:
+  process.env.DATABASE_SSL !== 'true'
+    ? undefined
+    : {
+        ssl: {
+          rejectUnauthorized: false,
+        },
+      },
   // Uncomment the following lines to enable REDIS
   // redis_url: REDIS_URL
 };
