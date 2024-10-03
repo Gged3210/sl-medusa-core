@@ -74,6 +74,18 @@ const plugins = [
       prefix: process.env.S3_PREFIX,
     },
   },
+  {
+    resolve: `@rsc-labs/medusa-store-analytics`,
+    options: {
+      enableUI: true
+    }
+  },
+  // {
+  //   resolve: 'medusa-plugin-category-images',
+  //   options: {
+  //     enableUI: true,
+  //   },
+  // },
 ];
 
 const modules = {
