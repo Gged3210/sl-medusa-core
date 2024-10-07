@@ -24,3 +24,8 @@ build
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

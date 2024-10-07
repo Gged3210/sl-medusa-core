@@ -21,7 +21,7 @@
     "test": "cross-env jest",
     "seed": "cross-env medusa seed -f ./data/seed.json",
     "local": "cross-env npm run build && medusa start",
-    "start": "medusa migrations run && medusa develop -p=8080",
+    "start": "medusa develop -p=8080",
     "start:custom": "cross-env npm run build && node --preserve-symlinks --trace-warnings index.js",
     "dev": "cross-env npm run build:server && medusa develop"
   },
@@ -99,6 +99,7 @@
     "glob": "^7.1.6"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.12.2",
+    "npm": ">=10.5.0"
   }
 }

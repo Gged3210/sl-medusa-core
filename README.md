@@ -68,3 +68,11 @@ Join our [Discord server](https://discord.com/invite/medusajs) to meet other com
 - [Twitter](https://twitter.com/medusajs)
 - [LinkedIn](https://www.linkedin.com/company/medusajs)
 - [Medusa Blog](https://medusajs.com/blog/)
+
+
+## Deployment
+- use AWS EBS
+- eb create "sl-med-prod-env" (environment)
+- prepare the .env file
+- use "cat .env | sed '/^#/ d' | sed '/^$/ d' | sed 's/"/\\"/g' | xargs eb setenv" without the quotes.
+- to terminate an environment -  eb terminate "sl-med-prod-env" --force
