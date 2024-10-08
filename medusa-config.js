@@ -19,7 +19,7 @@ switch (process.env.NODE_ENV) {
 
 try {
   dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
-} catch (e) {}
+} catch (e) { }
 
 // CORS when consuming Medusa from admin
 const ADMIN_CORS =
@@ -86,6 +86,27 @@ const plugins = [
   //     enableUI: true,
   //   },
   // },
+  {
+    resolve: "@medusajs/admin",
+    /** @type {import('@medusajs/admin').PluginOptions} */
+    options: {
+      serve: true,
+      autoRebuild: true,
+      backend: process.env.MEDUSA_BACKEND_URL || "http://localhost:9000",
+      path: "/app",
+      outDir: "build",
+      develop: {
+        serve: true,
+        open: false,
+        port: 7001,
+        host: "example.com",
+        logLevel: "error",
+        stats: "normal",
+        allowedHosts: "auto",
+        webSocketURL: undefined,
+      },
+    },
+  },
 ];
 
 const modules = {
@@ -111,9 +132,9 @@ const projectConfig = {
   database_url: DATABASE_URL,
   admin_cors: ADMIN_CORS,
   database_extra:
-  process.env.DATABASE_SSL !== 'true'
-    ? undefined
-    : {
+    process.env.DATABASE_SSL !== 'true'
+      ? undefined
+      : {
         ssl: {
           rejectUnauthorized: false,
         },
