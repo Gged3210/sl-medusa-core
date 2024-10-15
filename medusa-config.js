@@ -46,9 +46,21 @@ const plugins = [
     resolve: "@medusajs/admin",
     /** @type {import('@medusajs/admin').PluginOptions} */
     options: {
+      serve: true,
       autoRebuild: true,
+      backend: process.env.MEDUSA_BACKEND_URL || "http://localhost:9000",
+      path: "/app",
+      outDir: "build",
       develop: {
+        serve: true,
+        // open: false,
         open: process.env.OPEN_BROWSER !== "false",
+        port: 7001,
+        host: "example.com",
+        logLevel: "error",
+        stats: "normal",
+        allowedHosts: "auto",
+        webSocketURL: undefined,
       },
     },
   },
@@ -86,27 +98,7 @@ const plugins = [
   //     enableUI: true,
   //   },
   // },
-  {
-    resolve: "@medusajs/admin",
-    /** @type {import('@medusajs/admin').PluginOptions} */
-    options: {
-      serve: true,
-      autoRebuild: true,
-      backend: process.env.MEDUSA_BACKEND_URL || "http://localhost:9000",
-      path: "/app",
-      outDir: "build",
-      develop: {
-        serve: true,
-        open: false,
-        port: 7001,
-        host: "example.com",
-        logLevel: "error",
-        stats: "normal",
-        allowedHosts: "auto",
-        webSocketURL: undefined,
-      },
-    },
-  },
+
 ];
 
 const modules = {
@@ -123,7 +115,7 @@ const modules = {
     }
   },*/
 };
-
+console.log("+++++ADMIN_CORS", ADMIN_CORS);
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
 const projectConfig = {
   jwt_secret: process.env.JWT_SECRET || "supersecret",
