@@ -92,6 +92,12 @@ const plugins = [
       enableUI: true
     }
   },
+  {
+    resolve: `@rsc-labs/medusa-documents`,
+    options: {
+      enableUI: true
+    }
+  }
   // {
   //   resolve: 'medusa-plugin-category-images',
   //   options: {
