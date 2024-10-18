@@ -10626,7 +10626,7 @@ medusa-payment-manual@1.0.25:
   resolved "https://registry.npmjs.org/medusa-payment-manual/-/medusa-payment-manual-1.0.25.tgz"
   integrity sha512-TMwAcI9MU3kDbBaY2WydurG2Y3ZCB+MGiRpGiGkhrvPLyzQ2qPAL13sb8cWXyuLWRdyHB1INGSh+WN26z4SHNw==
 
-medusa-payment-stripe@6.0.11:
+medusa-payment-stripe@^6.0.11:
   version "6.0.11"
   resolved "https://registry.npmjs.org/medusa-payment-stripe/-/medusa-payment-stripe-6.0.11.tgz"
   integrity sha512-IRCIWmhz4sWcWZDcYLr3uz9s1BjC0JuWSMT1CtZPijjU3UmkhwtjRUb4xcHB90fNnbNsU5vCk/0K17K0soOUvA==
@@ -10684,6 +10684,7 @@ medusa-react@^9.0.0, medusa-react@^9.0.18, medusa-react@9.0.18:
     "@medusajs/event-bus-redis" "^1.8.14"
     "@medusajs/file-local" "1.0.4"
     "@medusajs/medusa" "^1.20.9"
+    "@rsc-labs/medusa-documents" "^0.8.4"
     "@rsc-labs/medusa-store-analytics" "^0.14.2"
     "@tanstack/react-query" "4.22.0"
     body-parser "^1.19.0"
