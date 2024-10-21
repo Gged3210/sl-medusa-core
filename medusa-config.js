@@ -55,8 +55,8 @@ const plugins = [
         serve: true,
         // open: false,
         open: process.env.OPEN_BROWSER !== "false",
-        port: 7001,
-        host: "example.com",
+        port: 7002,
+        host: "localhost",
         logLevel: "error",
         stats: "normal",
         allowedHosts: "auto",
@@ -128,7 +128,6 @@ const modules = {
     }
   },*/
 };
-console.log("+++++ADMIN_CORS", ADMIN_CORS);
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
 const projectConfig = {
   jwt_secret: process.env.JWT_SECRET || "supersecret",
@@ -136,6 +135,7 @@ const projectConfig = {
   store_cors: STORE_CORS,
   database_url: DATABASE_URL,
   admin_cors: ADMIN_CORS,
+  path_prefix: "/api",  // This handles the /api prefix stripping
   database_extra:
     process.env.DATABASE_SSL !== 'true'
       ? undefined
