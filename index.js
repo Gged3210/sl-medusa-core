@@ -48,3 +48,11 @@ const loaders = require("@medusajs/medusa/dist/loaders/index").default
 
     await start()
   })()
+
+
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api/')) {
+    req.url = req.url.replace('/api', '');
+  }
+  next();
+});
