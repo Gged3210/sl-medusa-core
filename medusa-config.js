@@ -97,7 +97,22 @@ const plugins = [
     options: {
       enableUI: true
     }
-  }
+  },
+  {
+    resolve: `medusa-payment-stripe`,
+    options: {
+      api_key: process.env.STRIPE_API_KEY,
+      webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+      payment_options: {
+        payment_method_types: ["card"],
+        // Enable 3DS by setting automatic_payment_methods
+        automatic_payment_methods: {
+          enabled: true,
+          allow_redirects: 'always'
+        }
+      }
+    },
+  },
   // {
   //   resolve: 'medusa-plugin-category-images',
   //   options: {
@@ -106,9 +121,9 @@ const plugins = [
   // },
 
 ];
-
+console.log("00000000000000000----------", REDIS_URL);
 const modules = {
-  /*eventBus: {
+  eventBus: {
     resolve: "@medusajs/event-bus-redis",
     options: {
       redisUrl: REDIS_URL
@@ -119,7 +134,7 @@ const modules = {
     options: {
       redisUrl: REDIS_URL
     }
-  },*/
+  },
 };
 console.log("+++++ADMIN_CORS", ADMIN_CORS);
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
@@ -138,7 +153,7 @@ const projectConfig = {
         },
       },
   // Uncomment the following lines to enable REDIS
-  // redis_url: REDIS_URL
+  redis_url: REDIS_URL
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
