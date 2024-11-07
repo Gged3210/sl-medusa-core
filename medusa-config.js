@@ -21,6 +21,48 @@ try {
   dotenv.config({ path: process.cwd() + "/" + ENV_FILE_NAME });
 } catch (e) { }
 
+// Test the OAuth2 setup
+// test-ms365-oauth.js
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+
+async function testOAuth2Email() {
+  // Create OAuth2 transporter
+  const transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: false,
+    auth: {
+      type: 'OAuth2',
+      user: process.env.MS_EMAIL,
+      clientId: process.env.MS_CLIENT_ID,
+      clientSecret: process.env.MS_CLIENT_SECRET,
+      tenantId: process.env.MS_TENANT_ID,
+      // Token will be automatically handled
+    },
+  });
+
+  try {
+    // Verify connection
+    await transporter.verify();
+    console.log('OAuth2 Connection successful');
+
+    // Send test email
+    const info = await transporter.sendMail({
+      from: process.env.MS_EMAIL,
+      to: "test@yourdomain.com",
+      subject: "OAuth2 Test Email",
+      text: "This is a test email using OAuth2 authentication",
+      html: "<p>This is a test email using OAuth2 authentication</p>",
+    });
+
+    console.log('Test email sent');
+    console.log('Message ID:', info.messageId);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
 // CORS when consuming Medusa from admin
 const ADMIN_CORS =
   process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001";
@@ -113,6 +155,15 @@ const plugins = [
       }
     },
   },
+  {
+    resolve: `./src/services/microsoft-sender`,
+    options: {
+      client_id: process.env.MICROSOFT_CLIENT_ID,
+      client_secret: process.env.MICROSOFT_CLIENT_SECRET,
+      tenant_id: process.env.MICROSOFT_TENANT_ID,
+      sender_email: process.env.MICROSOFT_SENDER_EMAIL
+    }
+  },
   // {
   //   resolve: 'medusa-plugin-category-images',
   //   options: {
@@ -122,6 +173,7 @@ const plugins = [
 
 ];
 console.log("00000000000000000----------", REDIS_URL);
+testOAuth2Email();
 const modules = {
   eventBus: {
     resolve: "@medusajs/event-bus-redis",
@@ -156,9 +208,29 @@ const projectConfig = {
   redis_url: REDIS_URL
 };
 
+const msSmtpConfig = {
+  resolve: `medusa-plugin-smtp`,
+  options: {
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: false,
+    auth: {
+      type: 'OAuth2',
+      user: process.env.MS_EMAIL,
+      clientId: process.env.MS_CLIENT_ID,
+      clientSecret: process.env.MS_CLIENT_SECRET,
+      tenantId: process.env.MS_TENANT_ID,
+    },
+    from: process.env.MS_EMAIL
+  },
+}
+
+
 /** @type {import('@medusajs/medusa').ConfigModule} */
 module.exports = {
   projectConfig,
   plugins,
   modules,
 };
+
+
