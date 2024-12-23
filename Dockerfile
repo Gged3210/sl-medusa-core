@@ -4,11 +4,15 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --force
+# Install dependencies and Medusa CLI globally
+RUN npm ci --force && \
+    npm install -g @medusajs/medusa-cli
 
 # Copy the rest of the application code
 COPY . .
+
+# Run the build process during image creation
+RUN npm run build:server
 
 # Expose port
 EXPOSE 9000
@@ -17,5 +21,5 @@ EXPOSE 9000
 ENV NODE_ENV=production \
     PORT=9000
 
-# Run the application
-CMD ["npm", "start"]
+# Start medusa using npx to ensure we use the local version
+CMD ["npx", "medusa", "start"]

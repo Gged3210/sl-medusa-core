@@ -77,3 +77,6 @@ Join our [Discord server](https://discord.com/invite/medusajs) to meet other com
 - prepare the .env file
 - use "cat .env | sed '/^#/ d' | sed '/^$/ d' | sed 's/"/\\"/g' | xargs eb setenv" without the quotes.
 - to terminate an environment -  eb terminate "sl-med-prod-env" --force
+
+# Running Container
+- docker run -p 9000:9000 medusa-repo npm start
