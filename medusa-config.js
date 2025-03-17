@@ -30,7 +30,7 @@ const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
 
 const DATABASE_URL =
   process.env.DATABASE_URL || "postgres://localhost/medusa-starter-default";
-
+console.log("------------DATABASE_URL", DATABASE_URL)
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 
 const plugins = [
@@ -65,6 +65,18 @@ const plugins = [
     },
   },
   `medusa-plugin-wishlist`,
+  // {
+  //   resolve: "medusa-file-r2",
+  //   options: {
+  //     account_id: process.env.CLOUDFLARE_ACCOUNT_ID,
+  //     access_key: process.env.CLOUDFLARE_ACCESS_KEY,
+  //     secret_key: process.env.CLOUDFLARE_SECRET_KEY,
+  //     bucket: process.env.CLOUDFLARE_BUCKET,
+  //     public_url: process.env.CLOUDFLARE_PUBLIC_URL,
+  //     prefix: process.env.CLOUDFLARE_PREFIX,
+  //     endpoint: process.env.CLOUDFLARE_ENDPOINT
+  //   }
+  // },
   {
     resolve: `medusa-file-s3`,
     options: {
@@ -86,6 +98,17 @@ const plugins = [
       prefix: process.env.S3_PREFIX,
     },
   },
+  // {
+  //   resolve: "medusa-file-cloudflare-r2",
+  //   options: {
+  //     public_url: process.env.CLOUDFLARE_PUBLIC_URL,       // https://images.surplusloop.com
+  //     s3_endpoint: process.env.CLOUDFLARE_ENDPOINT,        // https://f9627655e2a386fe60fa5b01ce1cc118.r2.cloudflarestorage.com
+  //     bucket: process.env.CLOUDFLARE_BUCKET,               // sl-medusa
+  //     prefix: process.env.CLOUDFLARE_PREFIX,               // sl-med
+  //     access_key_id: process.env.CLOUDFLARE_ACCESS_KEY,    // 75EfE389d47830850a4b243e05759ab
+  //     secret_access_key: process.env.CLOUDFLARE_SECRET_KEY, // 83e35d4471da54cd66d7bd8924da3fa132476c7597797e79022a796866a5707
+  //   },
+  // },
   {
     resolve: `@rsc-labs/medusa-store-analytics`,
     options: {

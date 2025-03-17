@@ -20,10 +20,10 @@
     "watch": "cross-env tsc --watch",
     "test": "cross-env jest",
     "seed": "cross-env medusa seed -f ./data/seed.json",
-    "local": "cross-env npm run build && medusa start",
-    "start": "cross-env npm run build:server && medusa start",
-    "start:custom": "cross-env npm run build && node --preserve-symlinks --trace-warnings index.js",
-    "dev": "cross-env npm run build:server && medusa develop"
+    "local": "cross-env yarn run build && medusa start",
+    "start": "cross-env yarn run build:server && medusa start",
+    "start:custom": "cross-env yarn run build && node --preserve-symlinks --trace-warnings index.js",
+    "dev": "cross-env yarn run build:server && medusa develop"
   },
   "dependencies": {
     "@medusajs/admin": "^7.1.17",
@@ -41,6 +41,8 @@
     "dotenv": "16.3.1",
     "express": "^4.17.2",
     "ioredis": "^5.4.1",
+    "medusa-file-cloudflare-r2": "^0.0.8",
+    "medusa-file-r2": "^0.0.2",
     "medusa-file-s3": "^1.2.1",
     "medusa-fulfillment-manual": "1.1.41",
     "medusa-interfaces": "1.3.10",
@@ -98,7 +100,8 @@
     "testEnvironment": "node"
   },
   "resolutions": {
-    "glob": "^7.1.6"
+    "glob": "^7.1.6",
+    "@medusajs/modules-sdk": "^1.12.11"
   },
   "engines": {
     "node": ">=20.12.2",
