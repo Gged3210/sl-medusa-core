@@ -22,14 +22,12 @@ try {
 } catch (e) { }
 
 // CORS when consuming Medusa from admin
-const ADMIN_CORS =
-  process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001";
+const ADMIN_CORS = process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001,http://localhost:9000";
 
 // CORS to avoid issues when consuming Medusa from a client
 const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
 
-const DATABASE_URL =
-  process.env.DATABASE_URL || "postgres://localhost/medusa-starter-default";
+const DATABASE_URL = process.env.DATABASE_URL || "postgres://localhost/medusa-starter-default";
 console.log("------------DATABASE_URL", DATABASE_URL)
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
 
@@ -53,7 +51,6 @@ const plugins = [
       outDir: "build",
       develop: {
         serve: true,
-        // open: false,
         open: process.env.OPEN_BROWSER !== "false",
         port: 7002,
         host: "localhost",
@@ -77,6 +74,20 @@ const plugins = [
   //     endpoint: process.env.CLOUDFLARE_ENDPOINT
   //   }
   // },
+  {
+    resolve: "medusa-plugin-ses",
+    options: {
+      access_key_id: process.env.SES_ACCESS_KEY_ID,
+      secret_access_key: process.env.SES_SECRET_ACCESS_KEY,
+      region: process.env.SES_REGION,
+      from: process.env.SES_FROM,
+      template_path: process.env.SES_TEMPLATE_PATH,
+      partial_path: process.env.SES_PARTIAL_PATH,
+      // optional string containing email address separated by comma
+      enable_endpoint: process.env.SES_ENABLE_ENDPOINT,
+      enable_sim_mode: process.env.SES_ENABLE_SIM_MODE
+    }
+  },
   {
     resolve: `medusa-file-s3`,
     options: {
@@ -142,8 +153,8 @@ const plugins = [
   //     enableUI: true,
   //   },
   // },
-
 ];
+
 console.log("00000000000000000----------", REDIS_URL);
 const modules = {
   eventBus: {
@@ -159,8 +170,21 @@ const modules = {
     }
   },
 };
+
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
 const projectConfig = {
+  http: {
+    adminCors: ADMIN_CORS, // Use the ADMIN_CORS variable consistently
+    storeCors: STORE_CORS, // Use the STORE_CORS variable consistently
+  },
+  server_options: {
+    https: {
+      key: require('fs').readFileSync('certificates/key.pem'),
+      cert: require('fs').readFileSync('certificates/cert.pem'),
+      requestCert: false,
+      rejectUnauthorized: false
+    }
+  },
   jwt_secret: process.env.JWT_SECRET || "supersecret",
   cookie_secret: process.env.COOKIE_SECRET || "supersecret",
   store_cors: STORE_CORS,
@@ -175,9 +199,12 @@ const projectConfig = {
           rejectUnauthorized: false,
         },
       },
-  // Uncomment the following lines to enable REDIS
   redis_url: REDIS_URL
 };
+
+// For development debugging only - remove before deployment!
+console.log("-----------JWT_SECRET:", process.env.JWT_SECRET);
+console.log("-----------COOKIE_SECRET:", process.env.COOKIE_SECRET);
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
 module.exports = {
